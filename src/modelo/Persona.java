@@ -13,22 +13,12 @@ public class Persona {
     private String apellido;
     private String documento;      
     private String email;
-    String telefono;
 
     public Persona(String nombre, String apellido, String documento, String email, String telefono) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.documento = documento;
         this.email = email;
-        this.telefono = telefono;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public String getNombre() {

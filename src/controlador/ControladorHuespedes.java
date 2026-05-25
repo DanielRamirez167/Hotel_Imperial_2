@@ -51,7 +51,7 @@ public class ControladorHuespedes {
             try {
                 LocalDate fechaNacimiento = LocalDate.of(anioNacimiento, mesNacimiento, diaNacimiento);
 
-                Huesped huesped = new Huesped(nacionalidad, fechaNacimiento, nombre, apellido, documento, email, apellido);
+                Huesped huesped = new Huesped(nacionalidad, fechaNacimiento, nombre, apellido, documento, email);
                 hotel.getLstHuespedes().add(huesped);
                 
                 return huesped;
@@ -75,16 +75,13 @@ public class ControladorHuespedes {
     * Descripción: Buscar un cliente
     */
     
-    private Object buscarHuesped(String documento) {
-        
-        for (Huesped huesped : hotel.getLstHuespedes()) {
-            if (huesped.getDocumento().equals(documento))
-                
-        
-        return documento;
-        
+    public Huesped buscarHuesped(String documento) {
+    for (Huesped huesped : hotel.getLstHuespedes()) {
+        if (huesped.getDocumento().equals(documento)) {
+            return huesped;
+        }
     }
-        return null;
+    return null;
 }
     
     /*

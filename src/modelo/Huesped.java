@@ -16,13 +16,13 @@ public class Huesped extends Persona {
     private String nacionalidad;
     private LocalDate fechaNacimiento;
 
-    
-    
-    public Huesped(String nacionalidad, LocalDate fechaNacimiento, String nombre, String apellido, String documento, String email, String telefono) {
-        super(nombre, apellido, documento, email, telefono);
+    public Huesped(String nacionalidad, LocalDate fechaNacimiento, String nombre, String apellido, String documento, String email) {
+        super(nombre, apellido, documento, email);
         this.nacionalidad = nacionalidad;
         this.fechaNacimiento = fechaNacimiento;
     }
+
+    
     
 
 
