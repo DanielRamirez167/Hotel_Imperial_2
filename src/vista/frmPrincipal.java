@@ -17,6 +17,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     ControladorHuespedes Ctrhuespedes;
     ControladorHabitaciones Ctrhabitaciones;
+    ControladorReservas Ctrreservas;
 
     /**
      * Creates new form Vistappal
@@ -25,6 +26,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         initComponents();
         Ctrhuespedes = new ControladorHuespedes();
         Ctrhabitaciones = new ControladorHabitaciones(Ctrhuespedes.getHotel());
+        Ctrreservas = new ControladorReservas(Ctrhuespedes.getHotel(), Ctrhabitaciones);
         llenarCombos();
         actualizarCbxHabitaciones();
 
@@ -34,9 +36,14 @@ public class frmPrincipal extends javax.swing.JFrame {
                     actualizarCbxHuespedes();
                     actualizarTablaHabitaciones();
                 }
-            }
-        });
 
+                if (pnlPrincipal.getSelectedIndex() == 2) {
+                    actualizarCombosReservas();
+
+                }
+            }
+
+        });
     }
 
     /**
@@ -84,6 +91,22 @@ public class frmPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         pnlReservas = new javax.swing.JPanel();
+        lblHuespedReserva = new javax.swing.JLabel();
+        cbxHuespedReserva = new javax.swing.JComboBox<>();
+        lblHabitacionReserva = new javax.swing.JLabel();
+        cbxHabitacionReserva = new javax.swing.JComboBox<>();
+        lblFechaIngreso = new javax.swing.JLabel();
+        txtFechaIngreso = new javax.swing.JTextField();
+        lblFechaSalida = new javax.swing.JLabel();
+        txtFechaSalida = new javax.swing.JTextField();
+        lblCostoTotal = new javax.swing.JLabel();
+        txtCostoTotal = new javax.swing.JTextField();
+        lblNumeroReserva = new javax.swing.JLabel();
+        txtNumeroReserva = new javax.swing.JTextField();
+        btnCrearReserva = new javax.swing.JButton();
+        btnBuscarReserva = new javax.swing.JButton();
+        btnCancelarReserva = new javax.swing.JButton();
+        btnComprobanteReserva = new javax.swing.JButton();
         lblTituloPrincipal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -363,15 +386,134 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         pnlPrincipal.addTab("Habitaciones", pnlHabitaciones);
 
+        lblHuespedReserva.setText("Huesped");
+
+        lblHabitacionReserva.setText("Habitacion");
+
+        cbxHabitacionReserva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+
+        lblFechaIngreso.setText("Fecha de ingreso");
+
+        lblFechaSalida.setText("Fecha de Salida");
+
+        lblCostoTotal.setText("Costo total");
+
+        txtCostoTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCostoTotalActionPerformed(evt);
+            }
+        });
+
+        lblNumeroReserva.setText("Numero de  reserva");
+
+        btnCrearReserva.setText("Crear");
+        btnCrearReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearReservaActionPerformed(evt);
+            }
+        });
+
+        btnBuscarReserva.setText("Buscar");
+        btnBuscarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarReservaActionPerformed(evt);
+            }
+        });
+
+        btnCancelarReserva.setText("Cancelar Reserva");
+        btnCancelarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarReservaActionPerformed(evt);
+            }
+        });
+
+        btnComprobanteReserva.setText("Generar Comprobante");
+        btnComprobanteReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprobanteReservaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlReservasLayout = new javax.swing.GroupLayout(pnlReservas);
         pnlReservas.setLayout(pnlReservasLayout);
         pnlReservasLayout.setHorizontalGroup(
             pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 826, Short.MAX_VALUE)
+            .addGroup(pnlReservasLayout.createSequentialGroup()
+                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlReservasLayout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlReservasLayout.createSequentialGroup()
+                                .addComponent(lblHuespedReserva)
+                                .addGap(61, 61, 61)
+                                .addComponent(cbxHuespedReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlReservasLayout.createSequentialGroup()
+                                .addComponent(lblHabitacionReserva)
+                                .addGap(50, 50, 50)
+                                .addComponent(cbxHabitacionReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlReservasLayout.createSequentialGroup()
+                                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblFechaSalida, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblFechaIngreso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtFechaIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                                        .addComponent(txtFechaSalida))
+                                    .addGroup(pnlReservasLayout.createSequentialGroup()
+                                        .addComponent(lblCostoTotal)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtCostoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(pnlReservasLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(lblNumeroReserva)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNumeroReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlReservasLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(btnCrearReserva)
+                        .addGap(33, 33, 33)
+                        .addComponent(btnBuscarReserva)
+                        .addGap(33, 33, 33)
+                        .addComponent(btnCancelarReserva)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnComprobanteReserva)))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
         pnlReservasLayout.setVerticalGroup(
             pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 367, Short.MAX_VALUE)
+            .addGroup(pnlReservasLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHuespedReserva)
+                    .addComponent(cbxHuespedReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblHabitacionReserva)
+                    .addComponent(cbxHabitacionReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFechaIngreso)
+                    .addComponent(txtFechaIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFechaSalida)
+                    .addComponent(txtFechaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCostoTotal)
+                    .addComponent(txtCostoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumeroReserva)
+                    .addComponent(txtNumeroReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addGroup(pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCrearReserva)
+                    .addComponent(btnBuscarReserva)
+                    .addComponent(btnCancelarReserva)
+                    .addComponent(btnComprobanteReserva))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pnlPrincipal.addTab("Reservas", pnlReservas);
@@ -448,6 +590,30 @@ public class frmPrincipal extends javax.swing.JFrame {
         cancelarHabitacion();
     }//GEN-LAST:event_btnCancelarHabitacionActionPerformed
 
+    private void txtCostoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCostoTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCostoTotalActionPerformed
+
+    private void btnCrearReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearReservaActionPerformed
+        // TODO add your handling code here:
+        crearReserva();
+    }//GEN-LAST:event_btnCrearReservaActionPerformed
+
+    private void btnBuscarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarReservaActionPerformed
+        // TODO add your handling code here:
+        buscarReserva();
+    }//GEN-LAST:event_btnBuscarReservaActionPerformed
+
+    private void btnCancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarReservaActionPerformed
+        // TODO add your handling code here:
+        cancelarReserva();
+    }//GEN-LAST:event_btnCancelarReservaActionPerformed
+
+    private void btnComprobanteReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobanteReservaActionPerformed
+        // TODO add your handling code here:
+        generarComprobante();
+    }//GEN-LAST:event_btnComprobanteReservaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -488,12 +654,18 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnActualizarHuesped;
     private javax.swing.JButton btnAsignarHabitacion;
     private javax.swing.JButton btnBuscarHuesped;
+    private javax.swing.JButton btnBuscarReserva;
     private javax.swing.JButton btnCancelarHabitacion;
+    private javax.swing.JButton btnCancelarReserva;
+    private javax.swing.JButton btnComprobanteReserva;
     private javax.swing.JButton btnCrearHuesped;
+    private javax.swing.JButton btnCrearReserva;
     private javax.swing.JButton btnEliminarHuesped;
     private javax.swing.JComboBox<String> cbxAnioNacimientoHuesped;
     private javax.swing.JComboBox<String> cbxDiaNacimientoHuesped;
+    private javax.swing.JComboBox<String> cbxHabitacionReserva;
     private javax.swing.JComboBox<String> cbxHabitaciones;
+    private javax.swing.JComboBox<String> cbxHuespedReserva;
     private javax.swing.JComboBox<String> cbxHuespedes;
     private javax.swing.JComboBox<String> cbxMesNacimientoHuesped;
     private javax.swing.JPanel jPanel1;
@@ -501,27 +673,37 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAnioNacimientoHuesped;
     private javax.swing.JLabel lblApellidoHuesped;
+    private javax.swing.JLabel lblCostoTotal;
     private javax.swing.JLabel lblDiaNacimientoHuesped;
     private javax.swing.JLabel lblDocumentoHuesped;
     private javax.swing.JLabel lblEmailHuesped;
+    private javax.swing.JLabel lblFechaIngreso;
     private javax.swing.JLabel lblFechaNacimientoHuesped;
+    private javax.swing.JLabel lblFechaSalida;
     private javax.swing.JLabel lblHabitacionDisponible;
+    private javax.swing.JLabel lblHabitacionReserva;
+    private javax.swing.JLabel lblHuespedReserva;
     private javax.swing.JLabel lblHuespedes;
     private javax.swing.JLabel lblMesNacimientoHuesped;
     private javax.swing.JLabel lblNacionalidadHuesped;
     private javax.swing.JLabel lblNombreHuesped;
     private javax.swing.JLabel lblNumeroHabitacion;
+    private javax.swing.JLabel lblNumeroReserva;
     private javax.swing.JLabel lblTituloPrincipal;
     private javax.swing.JPanel pnlHabitaciones;
     private javax.swing.JPanel pnlHuespedes;
     private javax.swing.JTabbedPane pnlPrincipal;
     private javax.swing.JPanel pnlReservas;
     private javax.swing.JTextField txtApellidoHuesped;
+    private javax.swing.JTextField txtCostoTotal;
     private javax.swing.JTextField txtDocumentoHuesped;
     private javax.swing.JTextField txtEmailHuesped;
+    private javax.swing.JTextField txtFechaIngreso;
+    private javax.swing.JTextField txtFechaSalida;
     private javax.swing.JTextField txtHabitacionDisponible;
     private javax.swing.JTextField txtNacionalidadHuesped;
     private javax.swing.JTextField txtNombreHuesped;
+    private javax.swing.JTextField txtNumeroReserva;
     // End of variables declaration//GEN-END:variables
 
     public boolean validarCamposHuesped() {
@@ -680,73 +862,233 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void asignarHabitacion() {
         if (cbxHuespedes.getSelectedItem() == null) {
-        JOptionPane.showMessageDialog(this, "No hay huéspedes registrados.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    if (cbxHabitaciones.getSelectedItem() == null) {
-        JOptionPane.showMessageDialog(this, "No hay habitaciones disponibles.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+            JOptionPane.showMessageDialog(this, "No hay huéspedes registrados.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (cbxHabitaciones.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "No hay habitaciones disponibles.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    int numHab = getNumeroHabitacionSeleccionada();
-    String seleccionHuesped = cbxHuespedes.getSelectedItem().toString();
-    String documento = seleccionHuesped.split(" - ")[0];
-    Huesped huesped = Ctrhuespedes.buscarHuesped(documento);
-    String nombreCompleto = huesped.getNombre() + " " + huesped.getApellido();
+        int numHab = getNumeroHabitacionSeleccionada();
+        String seleccionHuesped = cbxHuespedes.getSelectedItem().toString();
+        String documento = seleccionHuesped.split(" - ")[0];
+        Huesped huesped = Ctrhuespedes.buscarHuesped(documento);
+        String nombreCompleto = huesped.getNombre() + " " + huesped.getApellido();
 
-    Ctrhabitaciones.asignarHuesped(numHab, nombreCompleto);
-    actualizarCbxHabitaciones();
-    actualizarTablaHabitaciones();
+        if (Ctrhabitaciones.getAsignaciones().containsValue(nombreCompleto)) {
+            JOptionPane.showMessageDialog(this,
+                    nombreCompleto + " ya tiene una habitación asignada.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    JOptionPane.showMessageDialog(this,
-        "Habitación " + numHab + " asignada correctamente a " + nombreCompleto + ".",
-        "Asignación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        Ctrhabitaciones.asignarHuesped(numHab, nombreCompleto);
+        actualizarCbxHabitaciones();
+        actualizarTablaHabitaciones();
+
+        JOptionPane.showMessageDialog(this,
+                "Habitación " + numHab + " asignada correctamente a " + nombreCompleto + ".",
+                "Asignación exitosa", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void cancelarHabitacion() {
         String numStr = txtHabitacionDisponible.getText().trim();
-    if (numStr.equals("")) {
-        JOptionPane.showMessageDialog(this, "Ingrese el número de habitación a liberar.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    try {
-        int numHab = Integer.parseInt(numStr);
-        int confirmar = JOptionPane.showConfirmDialog(this,
-            "¿Está seguro de liberar la habitación " + numHab + "?",
-            "Confirmar", JOptionPane.YES_NO_OPTION);
-        if (confirmar == JOptionPane.YES_OPTION) {
-            boolean ok = Ctrhabitaciones.liberarHabitacion(numHab);
-            if (ok) {
-                JOptionPane.showMessageDialog(this, "Habitación " + numHab + " liberada correctamente.");
-                actualizarCbxHabitaciones();
-                actualizarTablaHabitaciones();
-                txtHabitacionDisponible.setText("");
-            } else {
-                JOptionPane.showMessageDialog(this, "Habitación no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+        if (numStr.equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese el número de habitación a liberar.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "El número debe ser un entero.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        try {
+            int numHab = Integer.parseInt(numStr);
+            int confirmar = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de liberar la habitación " + numHab + "?",
+                    "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (confirmar == JOptionPane.YES_OPTION) {
+                boolean ok = Ctrhabitaciones.liberarHabitacion(numHab);
+                if (ok) {
+                    JOptionPane.showMessageDialog(this, "Habitación " + numHab + " liberada correctamente.");
+                    actualizarCbxHabitaciones();
+                    actualizarTablaHabitaciones();
+                    txtHabitacionDisponible.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Habitación no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El número debe ser un entero.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void actualizarTablaHabitaciones() {
         String[] columnas = {"Número", "Tipo", "Piso", "Precio/Noche", "Huésped Asignado"};
-    javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0);
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0);
 
-    for (Habitacion hab : Ctrhuespedes.getHotel().getLstHabitaciones()) {
-        if (!hab.isDisponible()) {
-            String huesped = Ctrhabitaciones.getAsignaciones().getOrDefault(hab.getNumero(), "Sin asignar");
-            modelo.addRow(new Object[]{
-                hab.getNumero(),
-                hab.getTipo(),
-                hab.getPiso(),
-                "$" + hab.getPrecioPorNoche(),
-                huesped
-            });
+        for (Habitacion hab : Ctrhuespedes.getHotel().getLstHabitaciones()) {
+            if (!hab.isDisponible()) {
+                String huesped = Ctrhabitaciones.getAsignaciones().getOrDefault(hab.getNumero(), "Sin asignar");
+                modelo.addRow(new Object[]{
+                    hab.getNumero(),
+                    hab.getTipo(),
+                    hab.getPiso(),
+                    "$" + hab.getPrecioPorNoche(),
+                    huesped
+                });
+            }
+        }
+        jTable1.setModel(modelo);
+    }
+
+    private void actualizarCombosReservas() {
+        cbxHuespedReserva.removeAllItems();
+        for (Huesped h : Ctrhuespedes.getHotel().getLstHuespedes()) {
+            cbxHuespedReserva.addItem(h.getDocumento() + " - " + h.getNombre() + " " + h.getApellido());
+        }
+
+        cbxHabitacionReserva.removeAllItems();
+        for (Habitacion hab : Ctrreservas.getHabitacionesDisponibles()) {
+            cbxHabitacionReserva.addItem(
+                    "Hab. " + hab.getNumero() + " - " + hab.getTipo() + " - $" + hab.getPrecioPorNoche()
+            );
         }
     }
-    jTable1.setModel(modelo);
+
+    private int getNumeroHabitacionReserva() {
+        String seleccion = cbxHabitacionReserva.getSelectedItem().toString();
+        return Integer.parseInt(seleccion.split(" ")[1]);
+    }
+
+    private String getDocumentoHuespedReserva() {
+        String seleccion = cbxHuespedReserva.getSelectedItem().toString();
+        // Formato: "123456 - Juan Pérez"
+        return seleccion.split(" - ")[0];
+    }
+
+    public void crearReserva() {
+        if (cbxHuespedReserva.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "No hay huéspedes registrados.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (cbxHabitacionReserva.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "No hay habitaciones disponibles.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (txtFechaIngreso.getText().trim().isEmpty() || txtFechaSalida.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese las fechas de ingreso y salida (yyyy-MM-dd).", "Campos requeridos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            LocalDate fechaIngreso = LocalDate.parse(txtFechaIngreso.getText().trim());
+            LocalDate fechaSalida = LocalDate.parse(txtFechaSalida.getText().trim());
+
+            if (!fechaSalida.isAfter(fechaIngreso)) {
+                JOptionPane.showMessageDialog(this, "La fecha de salida debe ser posterior a la de ingreso.", "Fecha inválida", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String documento = getDocumentoHuespedReserva();
+            int numeroHabitacion = getNumeroHabitacionReserva();
+
+            Reserva reserva = Ctrreservas.crearReserva(documento, numeroHabitacion, fechaIngreso, fechaSalida);
+
+            if (reserva != null) {
+                txtNumeroReserva.setText(String.valueOf(reserva.getNumeroReserva()));
+                txtCostoTotal.setText("$" + reserva.getCostoTotal());
+                actualizarCombosReservas();
+                JOptionPane.showMessageDialog(this,
+                        "Reserva creada correctamente.\nN° Reserva: " + reserva.getNumeroReserva(),
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo crear la reserva. Verifique los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Use yyyy-MM-dd  (ej: 2025-12-31).", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void buscarReserva() {
+        if (txtNumeroReserva.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el número de reserva.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            int numero = Integer.parseInt(txtNumeroReserva.getText().trim());
+            Reserva reserva = Ctrreservas.buscarReserva(numero);
+
+            if (reserva != null) {
+                txtFechaIngreso.setText(reserva.getFechaIngreso().toString());
+                txtFechaSalida.setText(reserva.getFechaSalida().toString());
+                txtCostoTotal.setText("$" + reserva.getCostoTotal());
+                String docHuesped = reserva.getHuesped().getDocumento();
+                for (int i = 0; i < cbxHuespedReserva.getItemCount(); i++) {
+                    if (cbxHuespedReserva.getItemAt(i).startsWith(docHuesped)) {
+                        cbxHuespedReserva.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró la reserva N° " + numero + ".", "No encontrado", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El número de reserva debe ser un entero.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cancelarReserva() {
+        if (txtNumeroReserva.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el número de reserva a cancelar.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            int numero = Integer.parseInt(txtNumeroReserva.getText().trim());
+            int confirmar = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de cancelar la reserva N° " + numero + "?",
+                    "Confirmar cancelación", JOptionPane.YES_NO_OPTION);
+
+            if (confirmar == JOptionPane.YES_OPTION) {
+                boolean ok = Ctrreservas.cancelarReserva(numero);
+                if (ok) {
+                    limpiarCamposReserva();
+                    actualizarCombosReservas();
+                    JOptionPane.showMessageDialog(this, "Reserva cancelada. La habitación quedó disponible nuevamente.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encontró la reserva N° " + numero + ".", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El número de reserva debe ser un entero.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void generarComprobante() {
+        if (txtNumeroReserva.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el número de reserva.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            int numero = Integer.parseInt(txtNumeroReserva.getText().trim());
+            Reserva reserva = Ctrreservas.buscarReserva(numero);
+
+            if (reserva != null) {
+                JOptionPane.showMessageDialog(this,
+                        reserva.generarComprobante(),
+                        "Comprobante de Reserva",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró la reserva N° " + numero + ".", "No encontrado", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El número de reserva debe ser un entero.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void limpiarCamposReserva() {
+        txtNumeroReserva.setText("");
+        txtFechaIngreso.setText("");
+        txtFechaSalida.setText("");
+        txtCostoTotal.setText("");
     }
 
 }
