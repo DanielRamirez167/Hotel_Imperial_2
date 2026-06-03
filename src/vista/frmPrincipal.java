@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vista;
+
 import controlador.*;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
@@ -13,15 +14,16 @@ import modelo.Huesped;
  * @author Danis
  */
 public class frmPrincipal extends javax.swing.JFrame {
-    
-    private ControladorHuespedes controladorHuespedes;
+
+    ControladorHuespedes Ctrhuespedes;
 
     /**
      * Creates new form Vistappal
      */
     public frmPrincipal() {
         initComponents();
-        ControladorHuespedes controlador = new ControladorHuespedes();
+        Ctrhuespedes = new ControladorHuespedes();
+        llenarCombos();
     }
 
     /**
@@ -91,10 +93,25 @@ public class frmPrincipal extends javax.swing.JFrame {
         });
 
         btnBuscarHuesped.setText("Buscar");
+        btnBuscarHuesped.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarHuespedActionPerformed(evt);
+            }
+        });
 
         btnActualizarHuesped.setText("Actualizar");
+        btnActualizarHuesped.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarHuespedActionPerformed(evt);
+            }
+        });
 
         btnEliminarHuesped.setText("Eliminar");
+        btnEliminarHuesped.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarHuespedActionPerformed(evt);
+            }
+        });
 
         lblNacionalidadHuesped.setText("Nacionalidad");
 
@@ -293,7 +310,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void btnCrearHuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearHuespedActionPerformed
         // TODO add your handling code here:
-           crearHuesped();
+        crearHuesped();
 
     }//GEN-LAST:event_btnCrearHuespedActionPerformed
 
@@ -304,6 +321,21 @@ public class frmPrincipal extends javax.swing.JFrame {
     private void cbxMesNacimientoHuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMesNacimientoHuespedActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxMesNacimientoHuespedActionPerformed
+
+    private void btnBuscarHuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarHuespedActionPerformed
+        // TODO add your handling code here:
+        buscarHuesped();
+    }//GEN-LAST:event_btnBuscarHuespedActionPerformed
+
+    private void btnActualizarHuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarHuespedActionPerformed
+        // TODO add your handling code here:
+        actualizarHuesped();
+    }//GEN-LAST:event_btnActualizarHuespedActionPerformed
+
+    private void btnEliminarHuespedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarHuespedActionPerformed
+        // TODO add your handling code here:
+        eliminarHuesped();
+    }//GEN-LAST:event_btnEliminarHuespedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -371,9 +403,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreHuesped;
     // End of variables declaration//GEN-END:variables
 
-
-
- public boolean validarCamposHuesped() {
+    public boolean validarCamposHuesped() {
         if (txtDocumentoHuesped.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "El documento es obligatorio");
             return false;
@@ -396,7 +426,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void crearHuesped() {
         if (validarCamposHuesped()) {
-            
+
             String documento = txtDocumentoHuesped.getText();
             String nombre = txtNombreHuesped.getText();
             String apellido = txtApellidoHuesped.getText();
@@ -405,24 +435,24 @@ public class frmPrincipal extends javax.swing.JFrame {
             int diaNacimiento = Integer.parseInt(cbxDiaNacimientoHuesped.getSelectedItem().toString());
             int mesNacimiento = Integer.parseInt(cbxMesNacimientoHuesped.getSelectedItem().toString());
             int anioNacimiento = Integer.parseInt(cbxAnioNacimientoHuesped.getSelectedItem().toString());
-            
-            
-            Huesped huesped =
-        controladorHuespedes.crearHuesped(documento,nombre,apellido,email,
-                nacionalidad,diaNacimiento,mesNacimiento, anioNacimiento);
-                    
+
+            Huesped huesped
+                    = Ctrhuespedes.crearHuesped(documento, nombre, apellido, email,
+                            nacionalidad, diaNacimiento, mesNacimiento, anioNacimiento);
+
             if (huesped != null) {
                 JOptionPane.showMessageDialog(this, "Cliente creado correctamente...");
                 System.out.println(huesped.getDocumento() + " - " + huesped.getNombre());
-                limpiarCamposCliente();
+                limpiarCamposHuesped();
+                actualizarListaHuespedes();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al crear el cliente... Puede que ya exista.");
             }
         }
-        
+
     }
-    
-    private void limpiarCamposCliente() {
+
+    private void limpiarCamposHuesped() {
         txtDocumentoHuesped.setText("");
         txtNombreHuesped.setText("");
         txtEmailHuesped.setText("");
@@ -431,22 +461,86 @@ public class frmPrincipal extends javax.swing.JFrame {
         cbxDiaNacimientoHuesped.setSelectedIndex(0);
         cbxMesNacimientoHuesped.setSelectedIndex(0);
         cbxAnioNacimientoHuesped.setSelectedIndex(0);
-}
+    }
+
     private void llenarCombos() {
-        // Día de nacimiento
-        for (int i = 31; i >= 1; i--) {
+        for (int i = 1; i <= 31; i++) {
             cbxDiaNacimientoHuesped.addItem(i + "");
         }
-        
-        // Mes de nacimiento
-        for (int i = 12; i >= 1; i--) {
+        for (int i = 1; i <= 12; i++) {
             cbxMesNacimientoHuesped.addItem(i + "");
         }
-        
-        // Año de nacimiento
         for (int i = LocalDate.now().getYear(); i >= 1940; i--) {
             cbxAnioNacimientoHuesped.addItem(i + "");
         }
     }
-    
+
+    private void buscarHuesped() {
+        if (txtDocumentoHuesped.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese el documento a buscar.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Huesped huesped = Ctrhuespedes.buscarHuesped(txtDocumentoHuesped.getText());
+        if (huesped != null) {
+            txtNombreHuesped.setText(huesped.getNombre());
+            txtApellidoHuesped.setText(huesped.getApellido());
+            txtEmailHuesped.setText(huesped.getEmail());
+            txtNacionalidadHuesped.setText(huesped.getNacionalidad());
+            cbxDiaNacimientoHuesped.setSelectedItem(String.valueOf(huesped.getFechaNacimiento().getDayOfMonth()));
+            cbxMesNacimientoHuesped.setSelectedItem(String.valueOf(huesped.getFechaNacimiento().getMonthValue()));
+            cbxAnioNacimientoHuesped.setSelectedItem(String.valueOf(huesped.getFechaNacimiento().getYear()));
+        } else {
+            JOptionPane.showMessageDialog(this, "El huésped no existe.", "No encontrado", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void actualizarHuesped() {
+
+        if (validarCamposHuesped()) {
+            boolean actualizado = Ctrhuespedes.actualizarHuesped(
+                    txtDocumentoHuesped.getText(),
+                    txtNombreHuesped.getText(),
+                    txtApellidoHuesped.getText(),
+                    txtEmailHuesped.getText(),
+                    txtNacionalidadHuesped.getText(),
+                    Integer.parseInt(cbxDiaNacimientoHuesped.getSelectedItem().toString()),
+                    Integer.parseInt(cbxMesNacimientoHuesped.getSelectedItem().toString()),
+                    Integer.parseInt(cbxAnioNacimientoHuesped.getSelectedItem().toString()));
+            if (actualizado) {
+                JOptionPane.showMessageDialog(this, "Huésped actualizado correctamente.");
+                limpiarCamposHuesped();
+            } else {
+                JOptionPane.showMessageDialog(this, "El huésped no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void eliminarHuesped() {
+
+        if (txtDocumentoHuesped.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Ingrese el documento a eliminar.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int confirmar = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de eliminar el huésped " + txtDocumentoHuesped.getText() + "?",
+                "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirmar == JOptionPane.YES_OPTION) {
+            boolean eliminado = Ctrhuespedes.borrarHuesped(txtDocumentoHuesped.getText());
+            if (eliminado) {
+                JOptionPane.showMessageDialog(this, "Huésped eliminado correctamente.");
+                limpiarCamposHuesped();
+            } else {
+                JOptionPane.showMessageDialog(this, "El huésped no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void actualizarListaHuespedes() {
+        for (Huesped huesped : Ctrhuespedes.getHotel().getLstHuespedes()) {
+            
+            
+            
+        }
+    }
+
 }
