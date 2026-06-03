@@ -7,7 +7,7 @@ package vista;
 import controlador.*;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
-import modelo.Huesped;
+import modelo.*;
 
 /**
  *
@@ -16,6 +16,7 @@ import modelo.Huesped;
 public class frmPrincipal extends javax.swing.JFrame {
 
     ControladorHuespedes Ctrhuespedes;
+    ControladorHabitaciones Ctrhabitaciones;
 
     /**
      * Creates new form Vistappal
@@ -23,7 +24,19 @@ public class frmPrincipal extends javax.swing.JFrame {
     public frmPrincipal() {
         initComponents();
         Ctrhuespedes = new ControladorHuespedes();
+        Ctrhabitaciones = new ControladorHabitaciones(Ctrhuespedes.getHotel());
         llenarCombos();
+        actualizarCbxHabitaciones();
+
+        pnlPrincipal.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                if (pnlPrincipal.getSelectedIndex() == 1) {
+                    actualizarCbxHuespedes();
+                    actualizarTablaHabitaciones();
+                }
+            }
+        });
+
     }
 
     /**
@@ -58,9 +71,19 @@ public class frmPrincipal extends javax.swing.JFrame {
         lblAnioNacimientoHuesped = new javax.swing.JLabel();
         cbxAnioNacimientoHuesped = new javax.swing.JComboBox<>();
         lblFechaNacimientoHuesped = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        pnlHabitaciones = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        lblNumeroHabitacion = new javax.swing.JLabel();
+        lblHabitacionDisponible = new javax.swing.JLabel();
+        btnAsignarHabitacion = new javax.swing.JButton();
+        cbxHuespedes = new javax.swing.JComboBox<>();
+        txtHabitacionDisponible = new javax.swing.JTextField();
+        lblHuespedes = new javax.swing.JLabel();
+        btnCancelarHabitacion = new javax.swing.JButton();
+        cbxHabitaciones = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        pnlReservas = new javax.swing.JPanel();
         lblTituloPrincipal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -244,36 +267,114 @@ public class frmPrincipal extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(293, 293, 293)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(433, Short.MAX_VALUE))
+        lblNumeroHabitacion.setText("Habitaciones");
+
+        lblHabitacionDisponible.setText("Habitación disponible");
+
+        btnAsignarHabitacion.setText("Asignar");
+        btnAsignarHabitacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarHabitacionActionPerformed(evt);
+            }
+        });
+
+        cbxHuespedes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblHuespedes.setText("Huesped");
+
+        btnCancelarHabitacion.setText("Liberar");
+        btnCancelarHabitacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarHabitacionActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout pnlHabitacionesLayout = new javax.swing.GroupLayout(pnlHabitaciones);
+        pnlHabitaciones.setLayout(pnlHabitacionesLayout);
+        pnlHabitacionesLayout.setHorizontalGroup(
+            pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHabitacionesLayout.createSequentialGroup()
+                .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlHabitacionesLayout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlHabitacionesLayout.createSequentialGroup()
+                                .addComponent(btnAsignarHabitacion)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelarHabitacion))
+                            .addGroup(pnlHabitacionesLayout.createSequentialGroup()
+                                .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNumeroHabitacion)
+                                    .addComponent(lblHabitacionDisponible))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlHabitacionesLayout.createSequentialGroup()
+                                        .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cbxHabitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtHabitacionDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbxHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlHabitacionesLayout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addComponent(lblHuespedes)))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 267, Short.MAX_VALUE))
+        pnlHabitacionesLayout.setVerticalGroup(
+            pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHabitacionesLayout.createSequentialGroup()
+                .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlHabitacionesLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNumeroHabitacion)
+                            .addComponent(cbxHabitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblHabitacionDisponible)
+                            .addComponent(txtHabitacionDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblHuespedes)
+                    .addComponent(cbxHuespedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(pnlHabitacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAsignarHabitacion)
+                    .addComponent(btnCancelarHabitacion))
+                .addGap(49, 49, 49))
         );
 
-        pnlPrincipal.addTab("Habitaciones", jPanel3);
+        pnlPrincipal.addTab("Habitaciones", pnlHabitaciones);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlReservasLayout = new javax.swing.GroupLayout(pnlReservas);
+        pnlReservas.setLayout(pnlReservasLayout);
+        pnlReservasLayout.setHorizontalGroup(
+            pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 826, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlReservasLayout.setVerticalGroup(
+            pnlReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 367, Short.MAX_VALUE)
         );
 
-        pnlPrincipal.addTab("Reservas", jPanel4);
+        pnlPrincipal.addTab("Reservas", pnlReservas);
 
         lblTituloPrincipal.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
         lblTituloPrincipal.setText("Hotel Imperial 2");
@@ -337,6 +438,16 @@ public class frmPrincipal extends javax.swing.JFrame {
         eliminarHuesped();
     }//GEN-LAST:event_btnEliminarHuespedActionPerformed
 
+    private void btnAsignarHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarHabitacionActionPerformed
+        // TODO add your handling code here:
+        asignarHabitacion();
+    }//GEN-LAST:event_btnAsignarHabitacionActionPerformed
+
+    private void btnCancelarHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarHabitacionActionPerformed
+        // TODO add your handling code here:
+        cancelarHabitacion();
+    }//GEN-LAST:event_btnCancelarHabitacionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -375,30 +486,40 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizarHuesped;
+    private javax.swing.JButton btnAsignarHabitacion;
     private javax.swing.JButton btnBuscarHuesped;
+    private javax.swing.JButton btnCancelarHabitacion;
     private javax.swing.JButton btnCrearHuesped;
     private javax.swing.JButton btnEliminarHuesped;
     private javax.swing.JComboBox<String> cbxAnioNacimientoHuesped;
     private javax.swing.JComboBox<String> cbxDiaNacimientoHuesped;
+    private javax.swing.JComboBox<String> cbxHabitaciones;
+    private javax.swing.JComboBox<String> cbxHuespedes;
     private javax.swing.JComboBox<String> cbxMesNacimientoHuesped;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAnioNacimientoHuesped;
     private javax.swing.JLabel lblApellidoHuesped;
     private javax.swing.JLabel lblDiaNacimientoHuesped;
     private javax.swing.JLabel lblDocumentoHuesped;
     private javax.swing.JLabel lblEmailHuesped;
     private javax.swing.JLabel lblFechaNacimientoHuesped;
+    private javax.swing.JLabel lblHabitacionDisponible;
+    private javax.swing.JLabel lblHuespedes;
     private javax.swing.JLabel lblMesNacimientoHuesped;
     private javax.swing.JLabel lblNacionalidadHuesped;
     private javax.swing.JLabel lblNombreHuesped;
+    private javax.swing.JLabel lblNumeroHabitacion;
     private javax.swing.JLabel lblTituloPrincipal;
+    private javax.swing.JPanel pnlHabitaciones;
     private javax.swing.JPanel pnlHuespedes;
     private javax.swing.JTabbedPane pnlPrincipal;
+    private javax.swing.JPanel pnlReservas;
     private javax.swing.JTextField txtApellidoHuesped;
     private javax.swing.JTextField txtDocumentoHuesped;
     private javax.swing.JTextField txtEmailHuesped;
+    private javax.swing.JTextField txtHabitacionDisponible;
     private javax.swing.JTextField txtNacionalidadHuesped;
     private javax.swing.JTextField txtNombreHuesped;
     // End of variables declaration//GEN-END:variables
@@ -444,7 +565,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Cliente creado correctamente...");
                 System.out.println(huesped.getDocumento() + " - " + huesped.getNombre());
                 limpiarCamposHuesped();
-                actualizarListaHuespedes();
+
             } else {
                 JOptionPane.showMessageDialog(this, "Error al crear el cliente... Puede que ya exista.");
             }
@@ -535,12 +656,97 @@ public class frmPrincipal extends javax.swing.JFrame {
         }
     }
 
-    private void actualizarListaHuespedes() {
-        for (Huesped huesped : Ctrhuespedes.getHotel().getLstHuespedes()) {
-            
-            
-            
+    private void actualizarCbxHabitaciones() {
+        cbxHabitaciones.removeAllItems();
+        for (Habitacion hab : Ctrhabitaciones.getHabitacionesDisponibles()) {
+            cbxHabitaciones.addItem(
+                    "Hab. " + hab.getNumero() + " - " + hab.getTipo()
+                    + " - $" + hab.getPrecioPorNoche());
         }
+    }
+
+    private int getNumeroHabitacionSeleccionada() {
+        String seleccion = cbxHabitaciones.getSelectedItem().toString();
+        String[] partes = seleccion.split(" ");
+        return Integer.parseInt(partes[1]);
+    }
+
+    private void actualizarCbxHuespedes() {
+        cbxHuespedes.removeAllItems();
+        for (Huesped h : Ctrhuespedes.getHotel().getLstHuespedes()) {
+            cbxHuespedes.addItem(h.getDocumento() + " - " + h.getNombre() + " " + h.getApellido());
+        }
+    }
+
+    private void asignarHabitacion() {
+        if (cbxHuespedes.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "No hay huéspedes registrados.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    if (cbxHabitaciones.getSelectedItem() == null) {
+        JOptionPane.showMessageDialog(this, "No hay habitaciones disponibles.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    int numHab = getNumeroHabitacionSeleccionada();
+    String seleccionHuesped = cbxHuespedes.getSelectedItem().toString();
+    String documento = seleccionHuesped.split(" - ")[0];
+    Huesped huesped = Ctrhuespedes.buscarHuesped(documento);
+    String nombreCompleto = huesped.getNombre() + " " + huesped.getApellido();
+
+    Ctrhabitaciones.asignarHuesped(numHab, nombreCompleto);
+    actualizarCbxHabitaciones();
+    actualizarTablaHabitaciones();
+
+    JOptionPane.showMessageDialog(this,
+        "Habitación " + numHab + " asignada correctamente a " + nombreCompleto + ".",
+        "Asignación exitosa", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void cancelarHabitacion() {
+        String numStr = txtHabitacionDisponible.getText().trim();
+    if (numStr.equals("")) {
+        JOptionPane.showMessageDialog(this, "Ingrese el número de habitación a liberar.", "Campo requerido", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    try {
+        int numHab = Integer.parseInt(numStr);
+        int confirmar = JOptionPane.showConfirmDialog(this,
+            "¿Está seguro de liberar la habitación " + numHab + "?",
+            "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirmar == JOptionPane.YES_OPTION) {
+            boolean ok = Ctrhabitaciones.liberarHabitacion(numHab);
+            if (ok) {
+                JOptionPane.showMessageDialog(this, "Habitación " + numHab + " liberada correctamente.");
+                actualizarCbxHabitaciones();
+                actualizarTablaHabitaciones();
+                txtHabitacionDisponible.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Habitación no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El número debe ser un entero.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }
+
+    private void actualizarTablaHabitaciones() {
+        String[] columnas = {"Número", "Tipo", "Piso", "Precio/Noche", "Huésped Asignado"};
+    javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0);
+
+    for (Habitacion hab : Ctrhuespedes.getHotel().getLstHabitaciones()) {
+        if (!hab.isDisponible()) {
+            String huesped = Ctrhabitaciones.getAsignaciones().getOrDefault(hab.getNumero(), "Sin asignar");
+            modelo.addRow(new Object[]{
+                hab.getNumero(),
+                hab.getTipo(),
+                hab.getPiso(),
+                "$" + hab.getPrecioPorNoche(),
+                huesped
+            });
+        }
+    }
+    jTable1.setModel(modelo);
     }
 
 }

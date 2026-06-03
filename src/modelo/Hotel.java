@@ -4,17 +4,16 @@ import java.util.ArrayList;
 
 public class Hotel {
 
-    private String nit;
+private String nit;
     private String nombre;
     private ArrayList<Huesped> lstHuespedes;
+    private ArrayList<Habitacion> lstHabitaciones;
 
-    public Hotel(String nit,
-             String nombre,
-             ArrayList<Huesped> lstHuespedes) {
-
-    this.nit = nit;
-    this.nombre = nombre;
-    this.lstHuespedes = lstHuespedes;
+    public Hotel(String nit, String nombre, ArrayList<Huesped> lstHuespedes) {
+        this.nit = nit;
+        this.nombre = nombre;
+        this.lstHuespedes = lstHuespedes;
+        this.lstHabitaciones = new ArrayList<>();
     }
 
     public ArrayList<Huesped> getLstHuespedes() {
@@ -23,6 +22,14 @@ public class Hotel {
 
     public void setLstHuespedes(ArrayList<Huesped> lstHuespedes) {
         this.lstHuespedes = lstHuespedes;
+    }
+
+    public ArrayList<Habitacion> getLstHabitaciones() {
+        return lstHabitaciones;
+    }
+
+    public void setLstHabitaciones(ArrayList<Habitacion> lstHabitaciones) {
+        this.lstHabitaciones = lstHabitaciones;
     }
 
     public String getNit() {
@@ -41,7 +48,6 @@ public class Hotel {
         this.nombre = nombre;
     }
 }
-    
 
 
     
