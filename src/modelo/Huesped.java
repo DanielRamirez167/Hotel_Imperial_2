@@ -42,11 +42,6 @@ public class Huesped extends Persona {
         this.nacionalidad = nacionalidad;
     }
 
-    public void getlstHuespedes() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-   
     }
    
     

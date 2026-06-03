@@ -14,7 +14,7 @@ public class Persona {
     private String documento;      
     private String email;
 
-    public Persona(String nombre, String apellido, String documento, String email, String telefono) {
+    public Persona(String nombre, String apellido, String documento, String email) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.documento = documento;
